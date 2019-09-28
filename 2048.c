@@ -12,6 +12,7 @@ void randNum ();            //随机出现数字
 int gameOver();
 void gameScore();           //记录游戏分数
 int mapFull();              //判断是否满了
+int gameWin();
 
 int map[4][4] = {0};
 int score;
@@ -29,11 +30,14 @@ void gameMain()
     int game_over;
     do
     {
-
         gameScore();
         ch = getch();
         randNum();
         move(ch);
+        if (gameWin())
+        {
+            return 0;
+        }
         while (mapFull())
         {
             if (gameOver() == 1)
@@ -44,10 +48,6 @@ void gameMain()
             move(ch);
         }
     }while (1);
-
-
-    system("pause");
-    return 0;
 }
 
 //如果满了
@@ -220,6 +220,23 @@ void gameInit()
     print();
 }
 
+//游戏胜利
+int gameWin ()
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            if (map[i][j] == 2048)
+            {
+                printf("\n\tYou Win!");
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
 //游戏结束
 int gameOver()
 {
@@ -291,4 +308,3 @@ void print()
     }
     printf("---------------------------------");
 }
-
