@@ -4,14 +4,14 @@
 #include <stdlib.h>
 #include <windows.h>
 
-void print();               //æ‰“å°æ•°å­—
-void gameInit();            //æ¸¸æˆåˆå§‹åŒ–
-void gameMain();
-void move(char ch);         //æ•°å­—ç§»åŠ¨
-void randNum ();            //éšæœºå‡ºç°æ•°å­—
+void print();               //´òÓ¡Êı×Ö
+void gameInit();            //ÓÎÏ·³õÊ¼»¯
+int gameMain();
+void move(char ch);         //Êı×ÖÒÆ¶¯
+void randNum ();            //Ëæ»ú³öÏÖÊı×Ö
 int gameOver();
-void gameScore();           //è®°å½•æ¸¸æˆåˆ†æ•°
-int mapFull();              //åˆ¤æ–­æ˜¯å¦æ»¡äº†
+void gameScore();           //¼ÇÂ¼ÓÎÏ··ÖÊı
+int mapFull();              //ÅĞ¶ÏÊÇ·ñÂúÁË
 int gameWin();
 
 int map[4][4] = {0};
@@ -23,8 +23,8 @@ int main()
     gameMain();
 }
 
-//æ¸¸æˆä¸»ä½“
-void gameMain()
+//ÓÎÏ·Ö÷Ìå
+int gameMain()
 {
     char ch;
     int game_over;
@@ -32,7 +32,6 @@ void gameMain()
     {
         gameScore();
         ch = getch();
-        randNum();
         move(ch);
         if (gameWin())
         {
@@ -47,16 +46,20 @@ void gameMain()
             ch = getch();
             move(ch);
         }
+        randNum();
+        print();
     }while (1);
 }
 
-//å¦‚æœæ»¡äº†
+//Èç¹ûÂúÁË
 int mapFull()
 {
     int mapfull = 1;
-    for (int i = 0; i < 4; i++)
+    int i;
+    for (i = 0; i < 4; i++)
     {
-        for (int j = 0; j < 4; j++)
+    	int j;
+        for (j = 0; j < 4; j++)
         {
             if (map[i][j] == 0)
             {
@@ -68,12 +71,13 @@ int mapFull()
     return mapfull;
 }
 
-//æ•°å­—ç§»åŠ¨
+//Êı×ÖÒÆ¶¯
 void move(char ch)
 {
-    if(ch == 'a')       //å½“ç”¨æˆ·è¾“å…¥çš„æ˜¯aæ—¶
+    if(ch == 'a')       //µ±ÓÃ»§ÊäÈëµÄÊÇaÊ±
     {
-        for (int i = 0; i < 4; i++)
+    	int i;
+        for (i = 0; i < 4; i++)
         {
             int j, k;
             for (j = 1, k = 0; j < 4; j++)
@@ -90,7 +94,7 @@ void move(char ch)
                         map[i][j] = 0;
                     } else {
                         map[i][k + 1] = map[i][j];
-                        if ((k + 1) != j)       //åˆ¤æ–­kå’Œjæ˜¯å¦ç›¸é‚»
+                        if ((k + 1) != j)       //ÅĞ¶ÏkºÍjÊÇ·ñÏàÁÚ
                         {
                             map[i][j] = 0;
                         }
@@ -99,12 +103,11 @@ void move(char ch)
                 }
             }
         }
-        system("CLS");
-        print();
     }
-    else if (ch == 'd')          //å½“ç”¨æˆ·è¾“å…¥çš„å€¼æ˜¯dæ—¶
+    else if (ch == 'd')          //µ±ÓÃ»§ÊäÈëµÄÖµÊÇdÊ±
     {
-        for (int i = 0; i < 4; i++)
+    	int i;
+        for (i = 0; i < 4; i++)
         {
             int j, k;
             for (j = 2, k = 3; j >= 0; j--)
@@ -134,7 +137,8 @@ void move(char ch)
     }
     else if (ch == 'w')
     {
-        for (int i = 0; i < 4; i++)
+    	int i;
+        for (i = 0; i < 4; i++)
         {
             int j, k;
             for (j = 1, k = 0; j < 4; j++)
@@ -164,7 +168,8 @@ void move(char ch)
     }
     else if (ch == 's')
     {
-        for (int i = 0; i < 4; i++)
+    	int i;
+        for (i = 0; i < 4; i++)
         {
             int j, k;
             for (j = 2, k = 3; j >= 0; j--)
@@ -192,11 +197,10 @@ void move(char ch)
             }
         }
     }
-    system("CLS");              //æ¸…é™¤å±å¹•
-    print();                    //å°†æ•°ç»„æ‰“å°å‡ºæ¥
+    system("CLS");              //Çå³ıÆÁÄ»
 }
 
-//æ¸¸æˆåˆå§‹åŒ–
+//ÓÎÏ·³õÊ¼»¯
 void gameInit()
 {
     srand((unsigned)time(NULL));
@@ -210,7 +214,7 @@ void gameInit()
     x = rand() % 4;
     y = rand() % 4;
 
-    if (map[x][y] != 0)                //åˆ¤æ–­æ•°ç»„å†…æ˜¯å¦ä¸æ˜¯0ï¼Œå¦‚æœä¸æ˜¯0å°±å†éšæœºä¸€æ¬¡
+    if (map[x][y] != 0)                //ÅĞ¶ÏÊı×éÄÚÊÇ·ñ²»ÊÇ0£¬Èç¹û²»ÊÇ0¾ÍÔÙËæ»úÒ»´Î
     {
         x = rand() % 4;
         y = rand() % 4;
@@ -220,12 +224,14 @@ void gameInit()
     print();
 }
 
-//æ¸¸æˆèƒœåˆ©
+//ÓÎÏ·Ê¤Àû
 int gameWin ()
 {
-    for (int i = 0; i < 4; i++)
+	int i;
+    for (i = 0; i < 4; i++)
     {
-        for (int j = 0; j < 4; j++)
+    	int j;
+        for (j = 0; j < 4; j++)
         {
             if (map[i][j] == 2048)
             {
@@ -237,15 +243,17 @@ int gameWin ()
     return 0;
 }
 
-//æ¸¸æˆç»“æŸ
+//ÓÎÏ·½áÊø
 int gameOver()
 {
     int gameover = 1;
-    for (int i = 0; i < 4; i++)
+    int i;
+    for (i = 0; i < 4; i++)
     {
-        for (int j = 0; j < 3; j++)
+    	int j;
+        for (j = 0; j < 3; j++)
         {
-            if ((map[i][j] == map[i][j + 1] || map[j][i] == map[j + 1][i]) && (map[i][j + 1] != 0 || map[j + 1][i]))   //åˆ¤æ–­æ¨ªå‘å’Œçºµå‘æ˜¯å¦ç›¸ç­‰
+            if ((map[i][j] == map[i][j + 1] || map[j][i] == map[j + 1][i]) && (map[i][j + 1] != 0 || map[j + 1][i]))   //ÅĞ¶ÏºáÏòºÍ×İÏòÊÇ·ñÏàµÈ
             {
                 gameover = 0;
                 return 0;
@@ -257,21 +265,23 @@ int gameOver()
     return gameover;
 }
 
-//åˆ†æ•°
+//·ÖÊı
 void gameScore()
 {
     score = 0;
-    for (int i = 0; i < 4; i++)
+    int i;
+    for (i = 0; i < 4; i++)
     {
-        for (int j = 0; j < 4; j++)
+    	int j;
+        for (j = 0; j < 4; j++)
         {
             score += map[i][j];
         }
     }
-    printf("\n\tåˆ†æ•°:%d", score);
+    printf("\n\t·ÖÊı:%d", score);
 }
 
-//éšæœºå‡ºæ•°
+//Ëæ»ú³öÊı
 void randNum ()
 {
     srand((unsigned)time(NULL));
@@ -288,14 +298,16 @@ void randNum ()
 }
 
 
-//æ‰“å°
+//´òÓ¡
 void print()
 {
-    for (int i = 0; i < 4; i++)
+	int i;
+    for (i = 0; i < 4; i++)
     {
         printf("---------------------------------\n");
         printf("|");
-        for (int j = 0; j < 4; j++)
+        int j;
+        for (j = 0; j < 4; j++)
         {
             if (map[i][j] == 0)
             {
